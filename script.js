@@ -31,7 +31,8 @@ borbutton.addEventListener('click', () => {
         return
     }
     list[ind].name = borname.value
-    message.textContent = `игра ${list[ind].game} отданна ${borname}`
+    const p = list[ind].game
+    message.textContent = `игра ${p} отданна ${borname}`
     render()
     
 })
@@ -41,8 +42,9 @@ retbutton.addEventListener('click', () => {
         message.textContent = 'эта игра итак свободна'
         return
     }
+    const p = list[ind].game
     list[ind].name = null
-    message.textContent = `игра ${list[ind].game} отданна`
+    message.textContent = `игра ${p} возвращенна`
     render()
 })
 
