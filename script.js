@@ -8,14 +8,20 @@ const filter = document.getElementById('filter')
 const hint = document.getElementById('hint');
 const player = document.getElementById('player')
 const game = document.getElementById('game')
+const addbutton = document.getElementById('add')
 let list = [
-    { game: 'Каркассон', player: ' 4 ', name: null },
-    { game: 'Доббль', player: ' 6 ', name: 'Анна' },
-    { game: 'Шахматы', player: ' 2 ', name: null }
+    { game: 'Каркассон', player: '4', name: null },
+    { game: 'Доббль', player: '6', name: 'Анна' },
+    { game: 'Шахматы', player: '2', name: null }
 ]
-
-
-
+addbutton.addEventListener('click', () => {
+    const mes = { game, player, name: null }
+    mes.game = game.value
+    mes.player = player.value
+    list.push(mes)
+    console.log(mes)
+    render()
+})
 
 borbutton.addEventListener('click', () => {
     if (gamesel.value === '0' && list[0].name == null) {
@@ -59,21 +65,21 @@ function render() {
         const item = document.createElement('li')
         if (filter.checked) {
             if (el.name === null) {
-                item.append(el.game, el.player + 'игрока(ов) ', 'свободно')
+                item.append(el.game + ' ', el.player + ' игрока(ов) ' + ' ', 'свободно')
                 gamelist.append(item)
             }
-            
+
         } else {
-            
+
             if (el.name === null) {
-                item.append(el.game, el.player + 'игрока(ов) ', 'свободно')
+                item.append(el.game + ' ', el.player  + ' игрока(ов) ', 'свободно')
             } else {
-                item.append(el.game, el.player + 'игрока(ов) ', 'взял(а) ' + el.name)
+                item.append(el.game + ' ', el.player + ' игрока(ов) ', 'взял(а) ' + el.name)
             }
             gamelist.append(item)
         }
-        
-        
+
+
         console.log(item)
     });
 
