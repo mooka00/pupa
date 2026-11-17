@@ -21,6 +21,7 @@ addbutton.addEventListener('click', () => {
     list.push(mes)
     console.log(mes)
     render()
+    renderoption()
 })
 
 borbutton.addEventListener('click', () => {
@@ -36,6 +37,9 @@ borbutton.addEventListener('click', () => {
     } else {
         message.textContent = 'error'
     }
+    list.forEach((el) => {
+        
+    });
     render()
 })
 retbutton.addEventListener('click', () => {
@@ -57,8 +61,16 @@ retbutton.addEventListener('click', () => {
 
 filter.addEventListener('change', () => {
     render()
+    
 });
-
+function renderoption(){
+    gamesel.textContent = ""
+    list.forEach((el) => {
+        const pull = document.createElement('option')
+        pull.append(el.game)
+        gamesel.append(pull)
+    });
+}
 function render() {
     gamelist.textContent = ""
     list.forEach((el) => {
@@ -85,4 +97,5 @@ function render() {
 
 
 }
+renderoption()
 render()
