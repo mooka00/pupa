@@ -25,36 +25,24 @@ addbutton.addEventListener('click', () => {
 })
 
 borbutton.addEventListener('click', () => {
-    if (gamesel.value === '0' && list[0].name == null) {
-        list[0].name = borname.value
-        message.textContent = 'игру ' + list[0].game + ' забрал ' + borname.value
-    } else if (gamesel.value === '1' && list[1].name == null) {
-        list[1].name = borname.value
-        message.textContent = 'игру ' + list[1].game + ' забрал ' + borname.value
-    } else if (gamesel.value === '2' && list[2].name == null) {
-        list[2].name = borname.value
-        message.textContent = 'игру ' + list[2].game + ' забрал ' + borname.value
-    } else {
-        message.textContent = 'error'
+    const ind = Number(gamesel.value)
+    if (list[ind].name != null){
+        message.textContent = 'эта игра уже занята'
+        return
     }
-    list.forEach((el) => {
-        
-    });
+    list[ind].name = borname.value
+    message.textContent = `игра ${list[ind].game} отданна ${borname}`
     render()
+    
 })
 retbutton.addEventListener('click', () => {
-    if (gamesel.value === '0' && list[0].name != null) {
-        list[0].name = null
-        message.textContent = 'игра ' + list[0].game + ' возвращена'
-    } else if (gamesel.value === '1' && list[1].name != null) {
-        list[1].name = null
-        message.textContent = 'игра ' + list[1].game + ' возвращена'
-    } else if (gamesel.value === '2' && list[2].name != null) {
-        list[2].name = null
-        message.textContent = 'игра ' + list[2].game + ' возвращена'
-    } else {
-        message.textContent = 'error'
+    const ind = Number(gamesel.value)
+    if (list[ind].name == null){
+        message.textContent = 'эта игра итак свободна'
+        return
     }
+    list[ind].name = null
+    message.textContent = `игра ${list[ind].game} отданна`
     render()
 })
 
@@ -65,10 +53,12 @@ filter.addEventListener('change', () => {
 });
 function renderoption(){
     gamesel.textContent = ""
-    list.forEach((el) => {
+    list.forEach((el, i) => {
         const pull = document.createElement('option')
         pull.append(el.game)
+        pull.value = i
         gamesel.append(pull)
+        
     });
 }
 function render() {
