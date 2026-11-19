@@ -32,6 +32,10 @@ addbutton.addEventListener('click', () => {
 })
 
 borbutton.addEventListener('click', () => {
+    if(borname.value === ''){
+        message.textContent = 'вы ввели не слово'
+        return
+    }
     const ind = Number(gamesel.value)
     if (list[ind].cop < 1) {
         message.textContent = 'эта игра уже занята'
@@ -49,6 +53,10 @@ borbutton.addEventListener('click', () => {
 
 })
 retbutton.addEventListener('click', () => {
+    if(borname.value === ''){
+        message.textContent = 'вы ввели не слово'
+        return
+    }
     const ind = Number(gamesel.value)
     const i = list[ind].name.indexOf(borname.value)
     if (i === -1) {
