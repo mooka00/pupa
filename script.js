@@ -10,9 +10,11 @@ const player = document.getElementById('player')
 const game = document.getElementById('game')
 const addbutton = document.getElementById('add')
 const cop = document.getElementById('copies')
+const cop1 = document.getElementById('copies2')
+const addbutton1 = document.getElementById('add1')
 let list = [
     { game: 'Каркассон', player: '4', name: [], cop: 4 },
-    { game: 'Доббль', player: '6', name: [], cop: 3 },
+    { game: 'Доббль', player: '6', name: ["Аня"], cop: 2 },
     { game: 'Шахматы', player: '2', name: [], cop: 2 }
 ]
 addbutton.addEventListener('click', () => {
@@ -30,7 +32,16 @@ addbutton.addEventListener('click', () => {
         message.textContent = " вы ввели некоректные данные"
     }
 })
-
+addbutton1.addEventListener('click', () =>{
+    const ind = Number(gamesel.value)
+    console.log(list[ind].cop + Number(cop1.value))
+    if(list[ind].cop + Number(cop1.value) < 0){
+        message.textContent = 'вы забираете слишком много игр'
+        return
+    }
+    list[ind].cop += Number(cop1.value)
+    render()
+})
 borbutton.addEventListener('click', () => {
     if(borname.value === ''){
         message.textContent = 'вы ввели не слово'
