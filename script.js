@@ -9,58 +9,74 @@ const hint = document.getElementById('hint');
 const player = document.getElementById('player')
 const game = document.getElementById('game')
 const addbutton = document.getElementById('add')
+const cop = document.getElementById('copies')
 let list = [
-    { game: 'Каркассон', player: '4', name: null },
-    { game: 'Доббль', player: '6', name: 'Анна' },
-    { game: 'Шахматы', player: '2', name: null }
+    { game: 'Каркассон', player: '4', name: [], cop: 4 },
+    { game: 'Доббль', player: '6', name: [], cop: 3 },
+    { game: 'Шахматы', player: '2', name: [], cop: 2 }
 ]
 addbutton.addEventListener('click', () => {
-    const mes = { game, player, name: null }
-    mes.game = game.value
-    mes.player = player.value
-    list.push(mes)
-    console.log(mes)
-    render()
-    renderoption()
+    if (game.value != "" && player.value != 0  && cop.value != 0 ){
+        const mes = { game, player, name: [], cop: 0 }
+        mes.game = game.value
+        mes.player = player.value
+        mes.cop = cop.value
+        list.push(mes)
+        console.log(mes)
+        render()
+        renderoption()
+    }
+    else{
+        message.textContent = " вы ввели некоректные данные"
+    }
 })
 
 borbutton.addEventListener('click', () => {
     const ind = Number(gamesel.value)
-    if (list[ind].name != null){
+    if (list[ind].cop < 1) {
         message.textContent = 'эта игра уже занята'
         return
     }
-    list[ind].name = borname.value
+    if (list[ind].name.includes(borname.value)){
+        message.textContent = borname.value + " уже занял(а) эту игру"
+        return
+    }
+    list[ind].name.push(borname.value)
+    list[ind].cop -= 1
     const p = list[ind].game
-    message.textContent = `игра ${p} отданна ${borname}`
+    message.textContent = `игра ${p} отданна ${borname.value}`
     render()
-    
+
 })
 retbutton.addEventListener('click', () => {
     const ind = Number(gamesel.value)
-    if (list[ind].name == null){
-        message.textContent = 'эта игра итак свободна'
+    const i = list[ind].name.indexOf(borname.value)
+    if (i === -1) {
+        message.textContent = borname.value + ' не брал(а) эту игру'
         return
     }
-    const p = list[ind].game
-    list[ind].name = null
-    message.textContent = `игра ${p} возвращенна`
-    render()
+    if (list[ind].name.includes(borname.value)){
+        
+        const p = list[ind].game
+        list[ind].name.splice(i, 1)
+        list[ind].cop += 1
+        message.textContent = `игра ${p} возвращенна`
+        render()
+    }
 })
 
 
 filter.addEventListener('change', () => {
     render()
-    
 });
-function renderoption(){
+function renderoption() {
     gamesel.textContent = ""
     list.forEach((el, i) => {
         const pull = document.createElement('option')
         pull.append(el.game)
         pull.value = i
         gamesel.append(pull)
-        
+
     });
 }
 function render() {
@@ -68,18 +84,13 @@ function render() {
     list.forEach((el) => {
         const item = document.createElement('li')
         if (filter.checked) {
-            if (el.name === null) {
-                item.append(el.game + ' ', el.player + ' игрока(ов) ' + ' ', 'свободно')
+            if (el.cop > 0) {
+                item.append(el.game + ' ', el.player + ' игрока(ов) ' + ' ', 'свободно ', el.cop)
                 gamelist.append(item)
             }
 
         } else {
-
-            if (el.name === null) {
-                item.append(el.game + ' ', el.player  + ' игрока(ов) ', 'свободно')
-            } else {
-                item.append(el.game + ' ', el.player + ' игрока(ов) ', 'взял(а) ' + el.name)
-            }
+            item.append(el.game + ' ', el.player + ' игрока(ов) ', 'свободно ', el.cop, ' игру заняли( ', el.name, " )")
             gamelist.append(item)
         }
 
